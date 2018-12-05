@@ -82,6 +82,14 @@ if($res[0]==0)
   	  break;
 	}
 
+
+
+}else
+{     	$msg=$hid." ".res[1];
+        $arrPostData['to'] = "Uc34277b1fd1b5ce81022efdee2d6f559";
+}
+
+//$msg=$cmd;
         $msg = "";
 $msg.= get_msg(0,0x1,$vA,$vA_change,'BJ 7902 STATUS','OPEN','CLOSE');
 $msg.= get_msg(0,0x2,$vA,$vA_change,'BJ 7902 DIFF BUS A','NORMAL','TRIP');
@@ -147,14 +155,6 @@ $msg.= get_msg(14,0x10,$vA,$vA_change,'BJ SPARE3','NORMAL','ALARM');
 $msg.= get_msg(14,0x20,$vA,$vA_change,'BJ SPARE4','NORMAL','ALARM');
 $msg.= get_msg(14,0x40,$vA,$vA_change,'BJ SPARE5','NORMAL','ALARM');
 $msg.= get_msg(14,0x80,$vA,$vA_change,'BJ SPARE6','NORMAL','ALARM');
-
-
-}else
-{     	$msg=$hid." ".res[1];
-        $arrPostData['to'] = "Uc34277b1fd1b5ce81022efdee2d6f559";
-}
-
-//$msg=$cmd;
 
 $arrPostData['messages'][0]['type'] = "text";
 $arrPostData['messages'][0]['text'] = $msg;
