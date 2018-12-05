@@ -15,6 +15,33 @@ if(isset($_POST["cmd"]) === true && empty($_POST["cmd"]) === false)
 {    	$cmd="";
 }
 
+if(isset($_POST["d"]) === true && empty($_POST["d"]) === false)
+{	$vA=$_POST["d"];
+}else if(isset($_GET["d"]) === true && empty($_GET["d"]) === false)
+{       $vA=$_GET["d"];
+}else
+{    	$vA="";
+}
+
+if(isset($_POST["c"]) === true && empty($_POST["c"]) === false)
+{	$vA_change=$_POST["c"];
+}else if(isset($_GET["c"]) === true && empty($_GET["c"]) === false)
+{       $vA_change=$_GET["c"];
+}else
+{    	$vA_change="";
+}
+
+
+function bc_hexdec($input)
+{
+    $output = '0';
+
+    if (preg_match('/^(0x)?(?P<hex>[a-f0-9]+)$/i', $input, $matches))
+        foreach (str_split(strrev($matches['hex'])) as $index => $hex)
+            $output = bcadd($output, bcmul(strval(hexdec($hex)), bcpow('16', strval($index))));
+
+    return $output;
+}
 
 if($hid!="")
 {
@@ -54,12 +81,79 @@ if($res[0]==0)
         	include('include-push-base-all.php');
   	  break;
 	}
+
+        $msg = "";
+$msg.= get_msg(0,0x1,$val,$val_change,'BJ 7902 STATUS','OPEN','CLOSE');
+$msg.= get_msg(0,0x2,$val,$val_change,'BJ 7902 DIFF BUS A','NORMAL','TRIP');
+$msg.= get_msg(0,0x4,$val,$val_change,'BJ 7902 DIFF BUS B ','NORMAL','TRIP');
+$msg.= get_msg(0,0x8,$val,$val_change,'BJ 7902 DIFFA RELAY','NORMAL','FAIL');
+$msg.= get_msg(0,0x10,$val,$val_change,'BJ 7902 DIFFB RELAY ','NORMAL','FAIL');
+$msg.= get_msg(0,0x20,$val,$val_change,'BJ 7012 STATUS','OPEN','CLOSE');
+$msg.= get_msg(0,0x40,$val,$val_change,'BJ 7012 DT PHASE R','NORMAL','TRIP');
+$msg.= get_msg(0,0x80,$val,$val_change,'BJ 7012 DT PHASE Y','NORMAL','TRIP');
+$msg.= get_msg(2,0x1,$val,$val_change,'BJ 7012 DT PHASE B','NORMAL','TRIP');
+$msg.= get_msg(2,0x2,$val,$val_change,'BJ 7012 DT ZONE 1','NORMAL','TRIP');
+$msg.= get_msg(2,0x4,$val,$val_change,'BJ 7012 DT ZONE 2','NORMAL','TRIP');
+$msg.= get_msg(2,0x8,$val,$val_change,'BJ 7012 DT ZONE 3','NORMAL','TRIP');
+$msg.= get_msg(2,0x10,$val,$val_change,'BJ 7012 RELAY','NORMAL','FAIL');
+$msg.= get_msg(2,0x20,$val,$val_change,'BJ 7022 STATUS','OPEN','CLOSE');
+$msg.= get_msg(2,0x40,$val,$val_change,'BJ 7022 DT PHASE R','NORMAL','TRIP');
+$msg.= get_msg(2,0x80,$val,$val_change,'BJ 7022 DT PHASE Y','NORMAL','TRIP');
+$msg.= get_msg(4,0x1,$val,$val_change,'BJ 7022 DT PHASE B','NORMAL','TRIP');
+$msg.= get_msg(4,0x2,$val,$val_change,'BJ 7022 DT ZONE 1','NORMAL','TRIP');
+$msg.= get_msg(4,0x4,$val,$val_change,'BJ 7022 DT ZONE 2','NORMAL','TRIP');
+$msg.= get_msg(4,0x8,$val,$val_change,'BJ 7022 DT ZONE 3','NORMAL','TRIP');
+$msg.= get_msg(4,0x10,$val,$val_change,'BJ 7022 RELAY FAIL','NORMAL','FAIL');
+$msg.= get_msg(4,0x20,$val,$val_change,'BJ 7912 STATUS','OPEN','CLOSE');
+$msg.= get_msg(4,0x40,$val,$val_change,'BJ 7912 Diff Relay Ph-R','NORMAL','TRIP');
+$msg.= get_msg(4,0x80,$val,$val_change,'BJ 7912 Diff Relay Ph-Y','NORMAL','TRIP');
+$msg.= get_msg(6,0x1,$val,$val_change,'BJ 7912 Diff Relay Ph-B','NORMAL','TRIP');
+$msg.= get_msg(6,0x2,$val,$val_change,'BJ 7912 Trip and Lockout','NORMAL','LOCKOUT');
+$msg.= get_msg(6,0x4,$val,$val_change,'BJ 7912 OC Trip','NORMAL','TRIP');
+$msg.= get_msg(6,0x8,$val,$val_change,'BJ 7912 Relay Fail','NORMAL','FAIL');
+$msg.= get_msg(6,0x10,$val,$val_change,'BJ RCC1 63BA','NORMAL','ALARM');
+$msg.= get_msg(6,0x20,$val,$val_change,'BJ RCC1 63BT','NORMAL','ALARM');
+$msg.= get_msg(6,0x40,$val,$val_change,'BJ RCC1 63Q','NORMAL','ALARM');
+$msg.= get_msg(6,0x80,$val,$val_change,'BJ RCC1 63G','NORMAL','ALARM');
+$msg.= get_msg(8,0x1,$val,$val_change,'BJ RCC1 49','NORMAL','ALARM');
+$msg.= get_msg(8,0x2,$val,$val_change,'BJ 7922 STATUS','OPEN','CLOSE');
+$msg.= get_msg(8,0x4,$val,$val_change,'BJ 7922 Diff Relay Ph-R','NORMAL','TRIP');
+$msg.= get_msg(8,0x8,$val,$val_change,'BJ 7922 Diff Relay Ph-Y','NORMAL','TRIP');
+$msg.= get_msg(8,0x10,$val,$val_change,'BJ 7922 Diff Relay Ph-B','NORMAL','TRIP');
+$msg.= get_msg(8,0x20,$val,$val_change,'BJ 7922 Trip and Lockout','NORMAL','LOCKOUT');
+$msg.= get_msg(8,0x40,$val,$val_change,'BJ 7922 OC Trip','NORMAL','TRIP');
+$msg.= get_msg(8,0x80,$val,$val_change,'BJ 7922 Relay Fail','NORMAL','FAIL');
+$msg.= get_msg(10,0x1,$val,$val_change,'BJ RCC2 63BA','NORMAL','ALARM');
+$msg.= get_msg(10,0x2,$val,$val_change,'BJ RCC2 63BT','NORMAL','ALARM');
+$msg.= get_msg(10,0x4,$val,$val_change,'BJ RCC2 63Q','NORMAL','ALARM');
+$msg.= get_msg(10,0x8,$val,$val_change,'BJ RCC2 63G','NORMAL','ALARM');
+$msg.= get_msg(10,0x10,$val,$val_change,'BJ RCC2 49','NORMAL','ALARM');
+$msg.= get_msg(10,0x20,$val,$val_change,'BJ 7942 Status Cl.','OPEN','CLOSE');
+$msg.= get_msg(10,0x40,$val,$val_change,'BJ 7942 Diff Relay Ph-R','NORMAL','TRIP');
+$msg.= get_msg(10,0x80,$val,$val_change,'BJ 7942 Diff Relay Ph-Y','NORMAL','TRIP');
+$msg.= get_msg(12,0x1,$val,$val_change,'BJ 7942 Diff Relay Ph-B','NORMAL','TRIP');
+$msg.= get_msg(12,0x2,$val,$val_change,'BJ 7942 Trip and Lockout','NORMAL','LOCKOUT');
+$msg.= get_msg(12,0x4,$val,$val_change,'BJ 7942 OC Trip','NORMAL','TRIP');
+$msg.= get_msg(12,0x8,$val,$val_change,'BJ 79242 Relay Fail','NORMAL','FAIL');
+$msg.= get_msg(12,0x10,$val,$val_change,'BJ RCC4 63BA','NORMAL','ALARM');
+$msg.= get_msg(12,0x20,$val,$val_change,'BJ RCC4 63BT','NORMAL','ALARM');
+$msg.= get_msg(12,0x40,$val,$val_change,'BJ RCC4 63Q','NORMAL','ALARM');
+$msg.= get_msg(12,0x80,$val,$val_change,'BJ RCC4 63G','NORMAL','ALARM');
+$msg.= get_msg(14,0x1,$val,$val_change,'BJ RCC4 49','NORMAL','ALARM');
+$msg.= get_msg(14,0x2,$val,$val_change,'BJ RTU STATUS','LOCAL','REMOTE');
+$msg.= get_msg(14,0x4,$val,$val_change,'BJ SPARE1','NORMAL','ALARM');
+$msg.= get_msg(14,0x8,$val,$val_change,'BJ SPARE2','NORMAL','ALARM');
+$msg.= get_msg(14,0x10,$val,$val_change,'BJ SPARE3','NORMAL','ALARM');
+$msg.= get_msg(14,0x20,$val,$val_change,'BJ SPARE4','NORMAL','ALARM');
+$msg.= get_msg(14,0x40,$val,$val_change,'BJ SPARE5','NORMAL','ALARM');
+$msg.= get_msg(14,0x80,$val,$val_change,'BJ SPARE6','NORMAL','ALARM');
+
 }else
 {     	$msg=$hid." ".res[1];
         $arrPostData['to'] = "Uc34277b1fd1b5ce81022efdee2d6f559";
 }
 
-$msg=$cmd;
+//$msg=$cmd;
 
 $arrPostData['messages'][0]['type'] = "text";
 $arrPostData['messages'][0]['text'] = $msg;
