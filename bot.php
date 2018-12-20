@@ -5,6 +5,11 @@ $access_token = 'VdbdfGuRlphc9Mv1d5BuPD2fyLJKmtERpniwwIWwfjUoruNPM5FcI2K1uwjZf/X
 // Get POST body content
 $content = file_get_contents('php://input');
 // Parse JSON
+$myfile = fopen("php.txt", "w") or die("Unable to open file!");
+fwrite($myfile, $content);
+fclose($myfile);
+
+
 $events = json_decode($content, true);
 // Validate parsed JSON data
 if (!is_null($events['events'])) {
