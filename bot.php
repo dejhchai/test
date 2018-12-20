@@ -133,7 +133,7 @@ if(isset($arrayJson['events'][0]['source']['userId']){
 	*/
 	
 	
-	//$replyToken = $arrayJson['events'][0]['replyToken'];
+	$replyToken = $arrayJson['events'][0]['replyToken'];
 		$anstext ="test";
 			// Build message to reply back
 			$messages = [
@@ -145,14 +145,14 @@ if(isset($arrayJson['events'][0]['source']['userId']){
 	  
 			// Make a POST Request to Messaging API to reply to sender
 			$url = 'https://api.line.me/v2/bot/message/reply';
-			/*$data = [
+			$data = [
 				'replyToken' => $replyToken,
 				'messages' => [$messages],
-			];*/
-			$data = [
+			];
+			/*$data = [
 				'to' =>  $id,
 				'messages' => [$messages],
-			];
+			];*/
 			$post = json_encode($data);
 			//$post = json_encode($arrayPostData);
 			$headers = array('Content-Type: application/json', 'Authorization: Bearer ' . $access_token);
