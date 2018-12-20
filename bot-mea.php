@@ -49,9 +49,9 @@ if (!is_null($events['events'])) {
                         $mqtt_group_name="debugtest";
 
                         $lid=$event['source']['groupId'];
-	               		 $uid=$event['source']['userId'];
-						 $rid=$event['source']['room'];
-                        if($event['source']['groupId']!="")
+	                $uid=$event['source']['userId'];
+					$rid=$event['source']['room'];
+/*                        if($event['source']['groupId']!="")
 	                {     $tid=1;
 	                }else if($event['source']['userId']!="")
         	        {     $lid=$event['source']['userId'];
@@ -62,7 +62,7 @@ if (!is_null($events['events'])) {
                               $tid=0;
                         }
                         $hid="";
-
+*/
 //                        $response = file_get_contents("http://www.csb-tech.com/line/bot/?lid=".$lid."&tid=".$tid."&uid=".$uid."&req=".$reqtext);
 //			$res = json_decode($response , true);
                         //$res[0]=query completed
@@ -75,19 +75,18 @@ if (!is_null($events['events'])) {
 //$res[7]=response command
 //$res[8]=MQTT group name
 //$res[9]=hardware type
-
                     
-		$strSQL = "http://122.155.13.16/cmddb.php?cmd=";
-         $strSQL .="INSERT%20INTO%20debugline%20(tgroupid,tuserid)";
+				$strSQL = "http://122.155.13.16/cmddb.php?cmd=";
+                $strSQL .="INSERT%20INTO%20debugline%20(tgroupid,tuserid)";
         	$strSQL .="%20VALUES%20(%27";
-        	$strSQL .=$event['source']['groupId']."_".$event['source']['room']."_".$event['source']['userId']."%27,%27".$event['source']['room']."%27) ";
+        	$strSQL .=$event['source']['groupId']."%27,%27".$event['source']['userId']."%27) ";
 		$result = file_get_contents($strSQL);
 		
 		
 					  //  pubMqtt("debugtest",$response);
 					
 					
-                    for($i=0;$i<count($res);$i++)
+  /*                  for($i=0;$i<count($res);$i++)
                     {
 			switch($res[$i][0])
                         {case 0:
@@ -111,7 +110,7 @@ if (!is_null($events['events'])) {
                          	$ena_response=255;
                          break;
                         }
-
+*/
                         // Get replyToken
                         $replyToken = $event['replyToken'];
 /*
@@ -127,8 +126,7 @@ if (!is_null($events['events'])) {
                                         //pubMqtt("debugtest","[".$event['source']['type']."]".$event['source']['groupId']."[".$event['source']['userId']."]:". $event['message']['text'].":".$anstext );
                                 break;
                         }
-*/
-                        //pubMqtt("debugtest","[".$event['source']['type']."]".$event['source']['groupId']."[".$event['source']['userId']."]:". $event['message']['text'].":".$anstext );
+*/                        //pubMqtt("debugtest","[".$event['source']['type']."]".$event['source']['groupId']."[".$event['source']['userId']."]:". $event['message']['text'].":".$anstext );
                         //pubMqtt("debugtest",json_encode($res));
                         //pubMqtt("debugtest",$lid." : ".$hid);
                         //pubMqtt("debugtest","[".$res[$i][0].",".$res[$i][1].",".$res[$i][2].",".$res[$i][3].",".$res[$i][4].",".$res[$i][5].",".$res[$i][6].",".$res[$i][7].",".$res[$i][8].",".$res[$i][9]."]");
@@ -138,18 +136,16 @@ if (!is_null($events['events'])) {
                         $ena_response=1;
                         */
 
-
+/*
                     }
-					
-					$ena_response=1;
-					$anstext = 	$lid."_".$uid."_".$rid;
-					
                         if($anstext=="")
                         {   $ena_response=0;
                         }
 
                         if(($ena_response==1)||($ena_response==3))
                         {
+	*/
+		$anstext ="test";
 			// Build message to reply back
 			$messages = [
 				'type' => 'text',
@@ -175,7 +171,7 @@ if (!is_null($events['events'])) {
 			$result = curl_exec($ch);
 			curl_close($ch);
                         //pubMqtt("debugtest",$result);
-                        }
+                        
                         echo $result . "\r\n";
 		}
 	}
