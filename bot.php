@@ -98,7 +98,7 @@ if(isset($arrayJson['events'][0]['source']['userId']){
                         }
 */
                         // Get replyToken
-                        $replyToken = $arrayJson['events'][0]['replyToken'];
+                        
 /*
                         switch($ena_response)
                         {       //case 255: pubMqtt($mqtt_group_name,json_encode($res[$i])); break;
@@ -131,6 +131,9 @@ if(isset($arrayJson['events'][0]['source']['userId']){
                         if(($ena_response==1)||($ena_response==3))
                         {
 	*/
+	
+	
+	//$replyToken = $arrayJson['events'][0]['replyToken'];
 		$anstext ="test";
 			// Build message to reply back
 			$messages = [
@@ -139,18 +142,19 @@ if(isset($arrayJson['events'][0]['source']['userId']){
 			];
 
 
-	  $arrayPostData['to'] = $id;
-      $arrayPostData['messages'][0]['type'] = "text";
-      $arrayPostData['messages'][0]['text'] = "สวัสดีจ้าาา";
-     
+	  
 			// Make a POST Request to Messaging API to reply to sender
 			$url = 'https://api.line.me/v2/bot/message/reply';
-			$data = [
+			/*$data = [
 				'replyToken' => $replyToken,
 				'messages' => [$messages],
+			];*/
+			$data = [
+				'to' =>  $id,
+				'messages' => [$messages],
 			];
-			//$post = json_encode($data);
-			$post = json_encode($arrayPostData);
+			$post = json_encode($data);
+			//$post = json_encode($arrayPostData);
 			$headers = array('Content-Type: application/json', 'Authorization: Bearer ' . $access_token);
 
 			$ch = curl_init($url);
