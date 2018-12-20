@@ -5,11 +5,15 @@ $access_token = 'NwAEkDtBFMnHVXW6SaPFQTAQOsfINOOnsn/fKorN4CW5A8eSkZp3x6QNPsGZXFh
 // Get POST body content
 $content = file_get_contents('php://input');
 // Parse JSON
-$arrayJson = json_decode($content, true);
+$events = json_decode($content, true);
 // Validate parsed JSON data
-
+if (!is_null($events['events'])) {
+	// Loop through each event
+	foreach ($events['events'] as $event) {
+		// Reply only when message sent is in 'text' format
+		if ($event['type'] == 'message' && $event['message']['type'] == 'text') {
 			// Get text sent
-			$reqtext = $arrayJson['events'][0]['message']['text'];
+			$reqtext = $event['message']['text'];
                         $reqtext = str_replace(chr(10),"%0A",$reqtext);
                         /*
                         $a="";
@@ -25,18 +29,9 @@ $arrayJson = json_decode($content, true);
                         $ena_response=0;
                         $mqtt_group_name="debugtest";
 
-if(isset($arrayJson['events'][0]['source']['userId']){
-      $id = $arrayJson['events'][0]['source']['userId'];
-   }
-   else if(isset($arrayJson['events'][0]['source']['groupId'])){
-      $id = $arrayJson['events'][0]['source']['groupId'];
-   }
-   else if(isset($arrayJson['events'][0]['source']['room'])){
-      $id = $arrayJson['events'][0]['source']['room'];
-   }
-
-    				
-	   
+                        $lid=$event['source']['groupId'];
+	                $uid=$event['source']['userId'];
+					$rid=$event['source']['room'];
 /*                        if($event['source']['groupId']!="")
 	                {     $tid=1;
 	                }else if($event['source']['userId']!="")
@@ -65,7 +60,7 @@ if(isset($arrayJson['events'][0]['source']['userId']){
 				$strSQL = "http://122.155.13.16/cmddb.php?cmd=";
                 $strSQL .="INSERT%20INTO%20debugline%20(tgroupid,tuserid)";
         	$strSQL .="%20VALUES%20(%27";
-        	$strSQL .=$id."%27,%27".$reqtext."%27) ";
+        	$strSQL .=$event['source']['groupId']."%27,%27".$event['source']['userId']."%27) ";
 		$result = file_get_contents($strSQL);
 		
 		
@@ -98,7 +93,7 @@ if(isset($arrayJson['events'][0]['source']['userId']){
                         }
 */
                         // Get replyToken
-                        
+                        $replyToken = $event['replyToken'];
 /*
                         switch($ena_response)
                         {       //case 255: pubMqtt($mqtt_group_name,json_encode($res[$i])); break;
@@ -131,9 +126,6 @@ if(isset($arrayJson['events'][0]['source']['userId']){
                         if(($ena_response==1)||($ena_response==3))
                         {
 	*/
-	
-	
-	$replyToken = $arrayJson['events'][0]['replyToken'];
 		$anstext ="test";
 			// Build message to reply back
 			$messages = [
@@ -142,19 +134,13 @@ if(isset($arrayJson['events'][0]['source']['userId']){
 			];
 
 
-	  
 			// Make a POST Request to Messaging API to reply to sender
 			$url = 'https://api.line.me/v2/bot/message/reply';
 			$data = [
 				'replyToken' => $replyToken,
 				'messages' => [$messages],
 			];
-			/*$data = [
-				'to' =>  $id,
-				'messages' => [$messages],
-			];*/
 			$post = json_encode($data);
-			//$post = json_encode($arrayPostData);
 			$headers = array('Content-Type: application/json', 'Authorization: Bearer ' . $access_token);
 
 			$ch = curl_init($url);
@@ -168,5 +154,7 @@ if(isset($arrayJson['events'][0]['source']['userId']){
                         //pubMqtt("debugtest",$result);
                         
                         echo $result . "\r\n";
-	
+		}
+	}
+}
 echo "OK";
