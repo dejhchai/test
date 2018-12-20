@@ -1,38 +1,15 @@
 <?php
 
-function pubMqtt($topic,$msg)
-{
-      //put("https://api.netpie.io/topic/ohmtest/$topic?retain",$msg);
-      put("https://api.netpie.io/topic/CSBLINE/$topic",$msg);
-}
-function put($url,$tmsg)
-{
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $tmsg);
-    curl_setopt($ch, CURLOPT_USERPWD, "10r3tgjqaAZLE9W:flHOyP93du9V3Zxdbsl8PGWi1");
-    $response = curl_exec($ch);
-    curl_close ($ch);
-    return $response;
-}
-
 $access_token = 'NwAEkDtBFMnHVXW6SaPFQTAQOsfINOOnsn/fKorN4CW5A8eSkZp3x6QNPsGZXFh3bo32pa1NEOmcvSgH2ez1ZKUZ3ZKdql9kQK/0ec16ztyR6MZxH3s3KwLpYDdBV2MWQD6W0OPFF4zXyys6305zRgdB04t89/1O/w1cDnyilFU=';
 
 // Get POST body content
 $content = file_get_contents('php://input');
 // Parse JSON
-$events = json_decode($content, true);
+$arrayJson = json_decode($content, true);
 // Validate parsed JSON data
-if (!is_null($events['events'])) {
-	// Loop through each event
-	foreach ($events['events'] as $event) {
-		// Reply only when message sent is in 'text' format
-		if ($event['type'] == 'message' && $event['message']['type'] == 'text') {
+
 			// Get text sent
-			$reqtext = $event['message']['text'];
+			$reqtext = $arrayJson['events'][0]['message']['text'];
                         $reqtext = str_replace(chr(10),"%0A",$reqtext);
                         /*
                         $a="";
@@ -48,9 +25,18 @@ if (!is_null($events['events'])) {
                         $ena_response=0;
                         $mqtt_group_name="debugtest";
 
-                        $lid=$event['source']['groupId'];
-	                $uid=$event['source']['userId'];
-					$rid=$event['source']['room'];
+if(isset($arrayJson['events'][0]['source']['userId']){
+      $id = $arrayJson['events'][0]['source']['userId'];
+   }
+   else if(isset($arrayJson['events'][0]['source']['groupId'])){
+      $id = $arrayJson['events'][0]['source']['groupId'];
+   }
+   else if(isset($arrayJson['events'][0]['source']['room'])){
+      $id = $arrayJson['events'][0]['source']['room'];
+   }
+
+    				
+	   
 /*                        if($event['source']['groupId']!="")
 	                {     $tid=1;
 	                }else if($event['source']['userId']!="")
@@ -79,7 +65,7 @@ if (!is_null($events['events'])) {
 				$strSQL = "http://122.155.13.16/cmddb.php?cmd=";
                 $strSQL .="INSERT%20INTO%20debugline%20(tgroupid,tuserid)";
         	$strSQL .="%20VALUES%20(%27";
-        	$strSQL .=$event['source']['groupId']."%27,%27".$event['source']['userId']."%27) ";
+        	$strSQL .=$id."%27,%27".$reqtext."%27) ";
 		$result = file_get_contents($strSQL);
 		
 		
@@ -112,7 +98,7 @@ if (!is_null($events['events'])) {
                         }
 */
                         // Get replyToken
-                        $replyToken = $event['replyToken'];
+                        $replyToken = $arrayJson['events'][0]['replyToken'];
 /*
                         switch($ena_response)
                         {       //case 255: pubMqtt($mqtt_group_name,json_encode($res[$i])); break;
@@ -153,13 +139,18 @@ if (!is_null($events['events'])) {
 			];
 
 
+	  $arrayPostData['to'] = $id;
+      $arrayPostData['messages'][0]['type'] = "text";
+      $arrayPostData['messages'][0]['text'] = "สวัสดีจ้าาา";
+     
 			// Make a POST Request to Messaging API to reply to sender
 			$url = 'https://api.line.me/v2/bot/message/reply';
 			$data = [
 				'replyToken' => $replyToken,
 				'messages' => [$messages],
 			];
-			$post = json_encode($data);
+			//$post = json_encode($data);
+			$post = json_encode($arrayPostData);
 			$headers = array('Content-Type: application/json', 'Authorization: Bearer ' . $access_token);
 
 			$ch = curl_init($url);
@@ -173,7 +164,5 @@ if (!is_null($events['events'])) {
                         //pubMqtt("debugtest",$result);
                         
                         echo $result . "\r\n";
-		}
-	}
-}
+	
 echo "OK";
