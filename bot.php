@@ -74,8 +74,17 @@ if (!is_null($events['events'])) {
 //$res[7]=response command
 //$res[8]=MQTT group name
 //$res[9]=hardware type
-                        pubMqtt("debugtest",$response);
-
+                    
+				$strSQL = "http://122.155.13.16/cmddb.php?cmd=";
+                $strSQL .="INSERT INTO debugline (tgroupid,tuserid)";
+        	$strSQL .=" VALUES ( '";
+        	$strSQL .=$event['source']['groupId']."','".$event['source']['userId']."') ";
+		$result = file_get_contents($strSQL);
+		
+		
+					  //  pubMqtt("debugtest",$response);
+					
+					
                     for($i=0;$i<count($res);$i++)
                     {
 			switch($res[$i][0])
