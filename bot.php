@@ -126,7 +126,8 @@ if (!is_null($events['events'])) {
                         if(($ena_response==1)||($ena_response==3))
                         {
 	*/
-		$anstext ="test";
+		$anstext =$lid.",".$uid.",".$rid;
+		//$anstext ="test";
 			// Build message to reply back
 			$messages = [
 				'type' => 'text',
