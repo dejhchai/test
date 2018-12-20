@@ -50,7 +50,8 @@ if (!is_null($events['events'])) {
 
                         $lid=$event['source']['groupId'];
 	                $uid=$event['source']['userId'];
-                        if($event['source']['groupId']!="")
+					$rid=$event['source']['room'];
+/*                        if($event['source']['groupId']!="")
 	                {     $tid=1;
 	                }else if($event['source']['userId']!="")
         	        {     $lid=$event['source']['userId'];
@@ -61,9 +62,9 @@ if (!is_null($events['events'])) {
                               $tid=0;
                         }
                         $hid="";
-
-                        $response = file_get_contents("http://www.csb-tech.com/line/bot/?lid=".$lid."&tid=".$tid."&uid=".$uid."&req=".$reqtext);
-			$res = json_decode($response , true);
+*/
+//                        $response = file_get_contents("http://www.csb-tech.com/line/bot/?lid=".$lid."&tid=".$tid."&uid=".$uid."&req=".$reqtext);
+//			$res = json_decode($response , true);
                         //$res[0]=query completed
 //$res[1]=response Message
 //$res[2]=hid , hardware ID
@@ -85,7 +86,7 @@ if (!is_null($events['events'])) {
 					  //  pubMqtt("debugtest",$response);
 					
 					
-                    for($i=0;$i<count($res);$i++)
+  /*                  for($i=0;$i<count($res);$i++)
                     {
 			switch($res[$i][0])
                         {case 0:
@@ -109,10 +110,10 @@ if (!is_null($events['events'])) {
                          	$ena_response=255;
                          break;
                         }
-
+*/
                         // Get replyToken
                         $replyToken = $event['replyToken'];
-
+/*
                         switch($ena_response)
                         {       //case 255: pubMqtt($mqtt_group_name,json_encode($res[$i])); break;
                         	case 2:
@@ -125,7 +126,7 @@ if (!is_null($events['events'])) {
                                         //pubMqtt("debugtest","[".$event['source']['type']."]".$event['source']['groupId']."[".$event['source']['userId']."]:". $event['message']['text'].":".$anstext );
                                 break;
                         }
-                        //pubMqtt("debugtest","[".$event['source']['type']."]".$event['source']['groupId']."[".$event['source']['userId']."]:". $event['message']['text'].":".$anstext );
+*/                        //pubMqtt("debugtest","[".$event['source']['type']."]".$event['source']['groupId']."[".$event['source']['userId']."]:". $event['message']['text'].":".$anstext );
                         //pubMqtt("debugtest",json_encode($res));
                         //pubMqtt("debugtest",$lid." : ".$hid);
                         //pubMqtt("debugtest","[".$res[$i][0].",".$res[$i][1].",".$res[$i][2].",".$res[$i][3].",".$res[$i][4].",".$res[$i][5].",".$res[$i][6].",".$res[$i][7].",".$res[$i][8].",".$res[$i][9]."]");
@@ -135,7 +136,7 @@ if (!is_null($events['events'])) {
                         $ena_response=1;
                         */
 
-
+/*
                     }
                         if($anstext=="")
                         {   $ena_response=0;
@@ -143,6 +144,8 @@ if (!is_null($events['events'])) {
 
                         if(($ena_response==1)||($ena_response==3))
                         {
+	*/
+		$anstext ="test";
 			// Build message to reply back
 			$messages = [
 				'type' => 'text',
@@ -168,7 +171,7 @@ if (!is_null($events['events'])) {
 			$result = curl_exec($ch);
 			curl_close($ch);
                         //pubMqtt("debugtest",$result);
-                        }
+                        
                         echo $result . "\r\n";
 		}
 	}
