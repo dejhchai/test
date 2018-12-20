@@ -76,9 +76,9 @@ if (!is_null($events['events'])) {
 //$res[9]=hardware type
                     
 				$strSQL = "http://122.155.13.16/cmddb.php?cmd=";
-                $strSQL .="INSERT INTO debugline (tgroupid,tuserid)";
-        	$strSQL .=" VALUES ( '";
-        	$strSQL .=$event['source']['groupId']."','".$event['source']['userId']."') ";
+                $strSQL .="INSERT%20INTO%20debugline%20(tgroupid,tuserid)";
+        	$strSQL .="%20VALUES%20(%27";
+        	$strSQL .=$event['source']['groupId']."%27,%27".$event['source']['userId']."%27) ";
 		$result = file_get_contents($strSQL);
 		
 		
