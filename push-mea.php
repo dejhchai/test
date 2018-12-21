@@ -40,8 +40,8 @@ $arrPostData = array();
 //$res[8]=MQTT group name
 //$res[9]=hardware type
 
-//$arrPostData['to']="C25de1030256b15cbfe3f8b9e96e44c4a";
-$arrPostData['to']="Udeadbeefdeadbeefdeadbeefdeadbeef";
+$arrPostData['to']="C25de1030256b15cbfe3f8b9e96e44c4a";
+//$arrPostData['to']="Udeadbeefdeadbeefdeadbeefdeadbeef";
 
 $msg=$cmd;
 
