@@ -59,10 +59,17 @@ $token = "wxTVZE2k6DLTzwjwYnqFXx1MvcefwAD6LIt9gPfEDZT"; //ใส่Token ที�
 
 if($events['state']=="ok")
 {
-	$message = "\r\n". $events['title']; //ข้อความที่ต้องการส่ง สูงสุด 1000 ตัวอักษร
+	//$message = "\r\n". $events['title']; //ข้อความที่ต้องการส่ง สูงสุด 1000 ตัวอักษร
+	$message = "\r\n". $events['ruleName'];
+	$message .= "\r\nสถานะ : ". $events['state'];
+	
+	
 }else
 {
-	$message = "\r\n". $events['title']."\r\n[". $events['evalMatches'][0]['value']."]"; //ข้อความที่ต้องการส่ง สูงสุด 1000 ตัวอักษร
+	//$message = "\r\n". $events['title']."\r\n[". $events['metric']." : ". $events['evalMatches'][0]['value']."]"; //ข้อความที่ต้องการส่ง สูงสุด 1000 ตัวอักษร
+	$message = "\r\n". $events['ruleName'];
+	$message .= "\r\nสถานะ : ". $events['state'];
+	$message .= "\r\n".$events['metric']." : ". $events['evalMatches'][0]['value'];
  }
 //$res = notify_message($str,$token);
 //print_r($res);
