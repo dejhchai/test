@@ -45,7 +45,7 @@ $myfile = fopen("webhook.txt", "w") or die("Unable to open file!");
 //$str=print_r($_GET,true);
 //fwrite($myfile, $str);
 fwrite($myfile, $content);
-fwrite($myfile, $events['evalMatches']['title']);
+fwrite($myfile, $event['title']);
 //fwrite($myfile, $value."\r\n");
 fclose($myfile);
 //$content = print_r($yourVar, true);
