@@ -10,6 +10,7 @@ if (!is_null($events['evalMatches']))
 	{	
 		$title=$event['title'];
 		$value=$event['value'];
+	/*
 		$token = "wxTVZE2k6DLTzwjwYnqFXx1MvcefwAD6LIt9gPfEDZT"; //ใส่Token ที่copy เอาไว้
 $message = "\r\n".$title."\r\n[".$value."]"; //ข้อความที่ต้องการส่ง สูงสุด 1000 ตัวอักษร
  
@@ -30,7 +31,7 @@ $queryData = array('message' => $message);
  $result = file_get_contents("https://notify-api.line.me/api/notify",FALSE,$context);
  $res = json_decode($result);
  print_r($res);
- 
+ */
 	}
 }
 $myfile = fopen("webhook.txt", "w") or die("Unable to open file!");
