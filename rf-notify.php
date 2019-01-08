@@ -13,7 +13,7 @@ if(isset($_POST["msg"]) === true && empty($_POST["msg"]) === false)
  if($msg!="")
  {
 $token = "wmuZn7ixkOkAp2V3WWLxr0xBJwFxKItscY5iuFLfdo7"; //ใส่Token ที่copy เอาไว้
-$str = $cmd; //ข้อความที่ต้องการส่ง สูงสุด 1000 ตัวอักษร
+$str = $msg; //ข้อความที่ต้องการส่ง สูงสุด 1000 ตัวอักษร
  
 $res = notify_message($str,$token);
 print_r($res);
