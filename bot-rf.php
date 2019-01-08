@@ -5,7 +5,7 @@ $access_token = '4MMIEQ+Xy/xKlq8Vr7KA8geQQXvDXhFfBkW6THceiRJhkHdftyrW5DunQy6/NkN
 // Get POST body content
 $content = file_get_contents('php://input');
 // Parse JSON
-$myfile = fopen("php.txt", "w") or die("Unable to open file!");
+$myfile = fopen("php-rf.txt", "w") or die("Unable to open file!");
 fwrite($myfile, $content);
 fclose($myfile);
 
