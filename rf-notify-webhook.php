@@ -39,6 +39,7 @@ $queryData = array('message' => $message);
  
 	}
 }*/
+/*
 $myfile = fopen("webhook.txt", "w") or die("Unable to open file!");
 //$str=print_r($_POST,true);
 //fwrite($myfile, $str);
@@ -52,7 +53,7 @@ fwrite($myfile,  "2>".$events['evalMatches'][0]['value']);
 fclose($myfile);
 //$content = print_r($yourVar, true);
 //file_put_contents('file.log', $content);
-
+*/
 
 $token = "wxTVZE2k6DLTzwjwYnqFXx1MvcefwAD6LIt9gPfEDZT"; //ใส่Token ที่copy เอาไว้
 
