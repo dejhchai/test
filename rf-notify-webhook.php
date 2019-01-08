@@ -9,7 +9,7 @@ if (!is_null($events['evalMatches']))
 	foreach ($events['evalMatches'] as $event) 
 	{	
 		$title=$event['title'];
-		$value=$event['value'];
+		//$value=$event['value'];
 	/*
 		$token = "wxTVZE2k6DLTzwjwYnqFXx1MvcefwAD6LIt9gPfEDZT"; //ใส่Token ที่copy เอาไว้
 $message = "\r\n".$title."\r\n[".$value."]"; //ข้อความที่ต้องการส่ง สูงสุด 1000 ตัวอักษร
@@ -41,7 +41,7 @@ $myfile = fopen("webhook.txt", "w") or die("Unable to open file!");
 //fwrite($myfile, $str);
 fwrite($myfile, $content);
 fwrite($myfile, $title."\r\n");
-fwrite($myfile, $value."\r\n");
+//fwrite($myfile, $value."\r\n");
 fclose($myfile);
 //$content = print_r($yourVar, true);
 //file_put_contents('file.log', $content);
