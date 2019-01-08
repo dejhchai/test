@@ -53,7 +53,7 @@ fclose($myfile);
 
 
 $token = "wxTVZE2k6DLTzwjwYnqFXx1MvcefwAD6LIt9gPfEDZT"; //ใส่Token ที่copy เอาไว้
-$message = "\r\n". $events['title']."\r\n[". $events[0]['value']."]"; //ข้อความที่ต้องการส่ง สูงสุด 1000 ตัวอักษร
+$message = "\r\n". $events['title']."\r\n[". $events['evalMatches']['value']."]"; //ข้อความที่ต้องการส่ง สูงสุด 1000 ตัวอักษร
  
 //$res = notify_message($str,$token);
 //print_r($res);
